@@ -71,7 +71,7 @@ class BaseClient:
 
     def _send_request(self, http_method, url, params, data, headers):
         """
-            Abstracted out for easy mock-testing
+        Abstracted out for easy mock-testing
         """
         return requests.request(
             method=http_method,

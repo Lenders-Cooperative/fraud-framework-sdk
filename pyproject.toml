@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fraud_framework_sdk"
 version = "1.0.0"
-description = "Lightweight Python wrapper to submit risk verifications requests and other actions to the Fraud Framework."
+description = "Lightweight Python API to submit risk verification requests and other actions to the Fraud Framework."
 authors = ["mmcclelland1002 <mmcclelland@thesummitgrp.com>"]
 
 [tool.poetry.dependencies]

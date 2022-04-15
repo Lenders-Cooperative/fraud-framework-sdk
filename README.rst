@@ -8,14 +8,14 @@ fraud-framework-sdk
 .. .. image:: https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge
 ..   :target: https://github.com/LendersCopperative/fraud-framework-sdk/actions?workflow=main
 
-.. .. image:: https://img.shields.io/pypi/v/fraud-framework-sdk.svg?style=for-the-badge
-..    :target: https://pypi.org/project/fraud-framework-sdk/
+.. image:: https://img.shields.io/pypi/v/fraud-framework-sdk.svg?style=for-the-badge
+   :target: https://pypi.org/project/fraud-framework-sdk/
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
    :target: https://github.com/psf/black
 
 
-Lightweight Python wrapper to submit risk verifications requests and other actions to the Fraud Framework.
+Lightweight Python API to submit risk verification requests and other actions to the Fraud Framework.
 
 Installation
 ============
@@ -34,7 +34,7 @@ Usage
 
 Quickstart
 ~~~~~~~~~~
-``fraud-framework-sdk`` is a lightweight Python wrapper to submit risk verifications requests and other actions to the Fraud Framework.
+``fraud-framework-sdk`` is a lightweight Python API to submit risk verification requests and other actions to the Fraud Framework.
 For example:
 
 .. code-block:: python

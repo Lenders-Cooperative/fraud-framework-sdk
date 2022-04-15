@@ -37,9 +37,9 @@ Testing
 
 Linting, Typing & Code Style
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. ``poetry run black fraud_framework_sdk``
+1. ``poetry run black``
     - Format using Black formatter with project's ``pyproject.toml`` settings
-2. ``poetry run isort fraud_framework_sdk``
+2. ``poetry run isort``
     - Format using ``isort`` with project's ``pyproject.toml`` settings
 3. ``poetry run mypy fraud_framework_sdk``
     - Run type checking
