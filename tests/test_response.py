@@ -1,6 +1,5 @@
 import dataclasses
 from datetime import datetime, timedelta
-from typing import Union
 
 import pytest
 
@@ -15,7 +14,7 @@ def test_response_attrs(response):
     assert isinstance(response.status_code, int)
     assert isinstance(response.req_args, dict)
     assert isinstance(response.headers, dict)
-    assert isinstance(response.data, Union[dict, bytes, None])
+    assert isinstance(response.data, (dict, bytes))
     assert isinstance(response.request_time, datetime)
     assert isinstance(response.response_time, datetime)
     assert isinstance(response.elapsed_time, timedelta)

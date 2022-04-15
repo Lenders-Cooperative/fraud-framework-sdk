@@ -13,7 +13,7 @@ class Response:
     status_code: int
     req_args: dict
     headers: dict
-    data: Union[dict, bytes, None]
+    data: Union[dict, bytes]
     request_time: datetime
     response_time: datetime
     elapsed_time: timedelta = field(init=False)
@@ -29,7 +29,7 @@ class Response:
         Raises:
             Exception: The request to the Fraud Framework API failed.
         """
-        if self.status_code == 200 and self.data and isinstance(self.data, (bytes, dict)):
+        if self.status_code == 200 and isinstance(self.data, (bytes, dict)):
             return self
         msg = f"The request to the Fraud Framework API failed. (url: {self.api_url})"
         raise errors.FraudFrameworkApiError(message=msg, response=self)
