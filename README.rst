@@ -24,7 +24,7 @@ Use **pip**:
 
 .. code-block:: sh
 
-    python -m pip install fraud-framework-sdk
+    pip install fraud-framework-sdk
 
 Python 3.8 to 3.10 supported.
 
@@ -106,15 +106,15 @@ After installation, run the following command in your terminal:
 
     ngrok http -host-header=rewrite localhost:[port]
 
-Ngrok will now host your service on the internet with a custom ngrok domain. Use this domain as your ``callback_url``` in your request to the Fraud Framework.
+Ngrok will now host your service on the internet with a custom ngrok domain. Use this domain as your ``callback_url`` in your request to the Fraud Framework.
 
 
 Todo
 ====
 - [x] Base API calls for endpoints
 - [x] Add documentation
-- [ ] Add and validate support for Python 3.7 & Python 3.8
-- [ ] Add mock request tests
-- [x] Setup GitHub action for testing
+- [x] Add and validate support for Python 3.8, 3.9, 3.10
+- [x] Add mock request tests
+- [ ] Setup GitHub action for testing
 - [x] Integrate mypy and enable type hinting
 - [ ] (?) Optional JSON schema validation for request payload
