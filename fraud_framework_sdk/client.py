@@ -42,7 +42,7 @@ class BaseClient:
         has_json: bool,
         source_app: str = None,
         source_program: str = None,
-    ) -> dict[str, str]:
+    ) -> dict:
         """
         Helper method to construct request headers
         Args:

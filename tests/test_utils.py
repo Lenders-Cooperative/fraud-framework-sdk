@@ -8,7 +8,6 @@ def test_user_agent():
     assert isinstance(user_agent, str)
     assert "fraud_framework_sdk" in user_agent  # check SDK client
     assert user_agent.startswith("Python")  # check no prefix
-    assert user_agent[-1].isdigit()  # check no suffix
 
 
 @pytest.mark.parametrize(
