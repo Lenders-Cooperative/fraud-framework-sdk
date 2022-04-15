@@ -2,13 +2,16 @@
 fraud-framework-sdk
 ===================
 
-.. image:: https://img.shields.io/github/workflow/status/LendersCopperative/fraud-framework-sdk/main/main?style=for-the-badge
-   :target: https://github.com/LendersCopperative/fraud-framework-sdk/actions?workflow=main
+.. .. image:: https://img.shields.io/github/workflow/status/LendersCooperative/fraud-framework-sdk/main/main?style=for-the-badge
+..    :target: https://github.com/LendersCooperative/fraud-framework-sdk/actions?workflow=main
 
 .. .. image:: https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge
 ..   :target: https://github.com/LendersCopperative/fraud-framework-sdk/actions?workflow=main
 
 .. image:: https://img.shields.io/pypi/v/fraud-framework-sdk.svg?style=for-the-badge
+   :target: https://pypi.org/project/fraud-framework-sdk/
+
+.. image:: https://img.shields.io/pypi/pyversions/fraud-framework-sdk?style=for-the-badge
    :target: https://pypi.org/project/fraud-framework-sdk/
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
