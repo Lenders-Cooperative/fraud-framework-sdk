@@ -21,7 +21,7 @@ def response(client):
         status_code=200,
         req_args={},
         headers={},
-        data={},
+        data={"referenceId": "555", "traceId": "333"},
         request_time=datetime(year=2022, month=1, day=1, hour=1),
         response_time=datetime(year=2022, month=1, day=1, hour=2),
     )

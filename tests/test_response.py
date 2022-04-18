@@ -18,6 +18,8 @@ def test_response_attrs(response):
     assert isinstance(response.request_time, datetime)
     assert isinstance(response.response_time, datetime)
     assert isinstance(response.elapsed_time, timedelta)
+    assert isinstance(response.reference_id, str) and response.reference_id == "555"
+    assert isinstance(response.trace_id, str) and response.trace_id == "333"
 
 
 def test_response_immutability(response):
@@ -28,8 +30,7 @@ def test_response_immutability(response):
 @pytest.mark.parametrize(
     "client,data,status_code",
     [
-        ("client", b"data", 200),
-        ("client", bytes(1), 200),
+        ("client", {"traceId": 555, "referenceId": 333}, 200),
         ("client", {"ok": True}, 200),
     ],
     indirect=["client"],
