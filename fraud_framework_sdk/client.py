@@ -1,5 +1,6 @@
 import hashlib
 import hmac
+import io
 import logging
 from datetime import datetime
 from typing import Optional
@@ -40,6 +41,7 @@ class BaseClient:
         token: str,
         request_id: str,
         has_json: bool,
+        has_files: bool,
         source_app: str = None,
         source_program: str = None,
     ) -> dict:
@@ -49,6 +51,7 @@ class BaseClient:
             token: Authentication credentials to the Fraud Framework
             request_id: Reference ID to track your verification request
             has_json: Request body has been passed in order to update header with the correct `Content-Type`
+            has_files: Request file has been passed in order to update header with the correct `Content-Type`
             source_app: Reference ID to track your verification request
             source_program: Reference ID to track your verification request
         Returns:
@@ -61,6 +64,8 @@ class BaseClient:
         }
         if has_json:
             headers.update({"Content-Type": "application/json;charset=utf-8"})
+        if has_files:
+            headers.update({"Content-Type": "multipart/form-data"})
         if source_program:
             headers.update({"x-source-program": source_program})
         if source_app:
@@ -69,7 +74,7 @@ class BaseClient:
             headers.update(self.additional_headers)
         return headers
 
-    def _send_request(self, http_method, url, params, data, headers):
+    def _send_request(self, http_method, url, params, data, file, headers):
         """
         Abstracted out for easy mock-testing
         """
@@ -78,6 +83,7 @@ class BaseClient:
             url=url,
             params=params,
             json=data,
+            files=dict(uploadFile=file),
             headers=headers,
             timeout=self.timeout,
             proxies=self.proxy,
@@ -92,24 +98,48 @@ class BaseClient:
         source_app: Optional[str] = None,
         http_method: str = "POST",
         data: Optional[dict] = None,
+        file: Optional[io.BytesIO] = None,
         params: Optional[dict] = None,
     ) -> Response:
+        """Create a request and execute the API call to Slack.
+        Args:
+            endpoint (str): The target Slack API method.
+                e.g. 'chat.postMessage'
+            request_id: Reference ID to track your verification request
+            source_program: Reference ID to track your verification request
+            source_app: Reference ID to track your verification request
+            http_method (str): HTTP method. e.g. 'POST'
+            data: The body to attach to the request. If a dictionary is
+                provided, form-encoding will take place.
+                e.g. {'key1': 'value1', 'key2': 'value2'}
+            file (bytes): File to multipart upload.
+                e.g. file_object
+            params (dict): The URL parameters to append to the URL.
+                e.g. {'key1': 'value1', 'key2': 'value2'}
+        Returns:
+            (Response)
+                The server's response to an HTTP request. Data
+                from the response can be accessed like a dict.
+        """
         if http_method not in self.ALLOWED_HTTP_METHODS:
             raise errors.FraudFrameworkRequestError(f"{http_method} method is not allowed")
 
         url = urljoin(self.base_url, endpoint)
+
         request_headers = self._build_auth_headers(
             token=self.token,
             request_id=request_id,
             source_program=source_program,
             source_app=source_app,
             has_json=data is not None,
+            has_files=file is not None,
         )
 
         request_args = {
             "headers": request_headers,
             "params": params,
             "json": data,
+            "files": file,
         }
         request_time = datetime.utcnow()
 
@@ -129,6 +159,7 @@ class BaseClient:
             url=url,
             params=params,
             data=data,
+            files=file,
             headers=request_headers,
         )
         response_body = response.json()
@@ -205,3 +236,14 @@ class WebClient(BaseClient):
             Response object
         """
         return self._api_call(f"/entities/app/ref/{request_id}", request_id, params=kwargs)
+
+    def upload_document(self, request_id, file, *args, **kwargs) -> Response:
+        """
+        Args:
+            request_id: Reference ID to track your verification request
+            file: File object that will be sent for external upload
+            kwargs: Extra query params that can be passed in the request
+        Returns:
+            Response object
+        """
+        return self._api_call(f"/default/docupload/{request_id}", request_id, file=file, params=kwargs)

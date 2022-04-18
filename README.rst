@@ -118,6 +118,6 @@ Todo
 - [x] Add documentation
 - [x] Add and validate support for Python 3.8, 3.9, 3.10
 - [x] Add mock request tests
-- [ ] Setup GitHub action for testing
+- [x] Setup GitHub action for testing
 - [x] Integrate mypy and enable type hinting
 - [ ] (?) Optional JSON schema validation for request payload
