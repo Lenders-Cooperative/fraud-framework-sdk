@@ -14,7 +14,7 @@ from .response import Response
 
 
 class BaseClient:
-    BASE_URL = "https://riskapi.sbaunifiedlending.com"
+    BASE_URL = "https://4zvgsgkj2i.execute-api.us-east-2.amazonaws.com"
 
     def __init__(
         self,
@@ -101,9 +101,9 @@ class BaseClient:
         file: Optional[io.BytesIO] = None,
         params: Optional[dict] = None,
     ) -> Response:
-        """Create a request and execute the API call to Slack.
+        """Create a request and execute the API call to Fraud Framework.
         Args:
-            endpoint (str): The target Slack API method.
+            endpoint (str): The target Fraud Framework API method.
                 e.g. 'chat.postMessage'
             request_id: Reference ID to track your verification request
             source_program: Reference ID to track your verification request
@@ -219,7 +219,7 @@ class WebClient(BaseClient):
         """
         kwargs.update({"callbackUrl": callback_url or self.callback_url})
         return self._api_call(
-            "/default/DoRiskReviewAPI",
+            "/risk/verify",
             data=data,
             request_id=request_id,
             source_app=source_app,
@@ -235,7 +235,7 @@ class WebClient(BaseClient):
         Returns:
             Response object
         """
-        return self._api_call(f"/entities/app/ref/{request_id}", request_id, params=kwargs)
+        return self._api_call(f"/risk/fetch/{request_id}", request_id, params=kwargs)
 
     def upload_document(self, request_id, file, *args, **kwargs) -> Response:
         """
@@ -246,4 +246,4 @@ class WebClient(BaseClient):
         Returns:
             Response object
         """
-        return self._api_call(f"/default/docupload/{request_id}", request_id, file=file, params=kwargs)
+        return self._api_call(f"/document/upload/{request_id}", request_id, file=file, params=kwargs)
