@@ -31,6 +31,6 @@ def response(client):
 def mock_response():
     mock_response = RequestsResponse()
     mock_response.status_code = 200
-    mock_response.headers = {"Authorization": 1234567890}
+    mock_response.headers = {"x-api-key": 1234567890}
     mock_response._content = b'{"response": "fake it till you make it"}'
     return mock_response

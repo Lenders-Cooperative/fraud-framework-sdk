@@ -26,23 +26,23 @@ def test_web_client_default_attrs(client):
         (
             "client",
             {"token": 12345, "request_id": "1231312314124214", "has_json": True, "has_files": False},
-            ["Authorization", "Content-Type", "User-Agent", "x-request-id"],
+            ["x-api-key", "Content-Type", "User-Agent", "x-request-id"],
         ),
         (
             "client",
             {
                 "token": 12345,
                 "request_id": "1231312314124214",
-                "source_program": "TEST",
+                "program_id": "TEST",
                 "has_json": True,
                 "has_files": False,
             },
             [
-                "Authorization",
+                "x-api-key",
                 "Content-Type",
                 "User-Agent",
                 "x-request-id",
-                "x-source-program",
+                "x-program-id",
             ],
         ),
         (
@@ -50,16 +50,16 @@ def test_web_client_default_attrs(client):
             {
                 "token": 12345,
                 "request_id": "1231312314124214",
-                "source_app": "123123123123",
+                "app_id": "123123123123",
                 "has_json": True,
                 "has_files": False,
             },
             [
-                "Authorization",
+                "x-api-key",
                 "Content-Type",
                 "User-Agent",
                 "x-request-id",
-                "x-source-app",
+                "x-app-id",
             ],
         ),
         (
@@ -67,18 +67,18 @@ def test_web_client_default_attrs(client):
             {
                 "token": 12345,
                 "request_id": "1231312314124214",
-                "source_program": "TEST",
-                "source_app": 123123123123,
+                "program_id": "TEST",
+                "app_id": 123123123123,
                 "has_json": True,
                 "has_files": False,
             },
             [
-                "Authorization",
+                "x-api-key",
                 "Content-Type",
                 "User-Agent",
                 "x-request-id",
-                "x-source-program",
-                "x-source-app",
+                "x-program-id",
+                "x-app-id",
             ],
         ),
         (
@@ -86,12 +86,12 @@ def test_web_client_default_attrs(client):
             {
                 "token": 12345,
                 "request_id": "1231312314124214",
-                "source_app": None,
+                "app_id": None,
                 "has_json": True,
                 "has_files": False,
             },
             [
-                "Authorization",
+                "x-api-key",
                 "Content-Type",
                 "User-Agent",
                 "x-request-id",
@@ -102,12 +102,12 @@ def test_web_client_default_attrs(client):
             {
                 "token": 12345,
                 "request_id": "1231312314124214",
-                "source_app": None,
+                "app_id": None,
                 "has_json": False,
                 "has_files": True,
             },
             [
-                "Authorization",
+                "x-api-key",
                 "User-Agent",
                 "x-request-id",
                 "Content-Type",

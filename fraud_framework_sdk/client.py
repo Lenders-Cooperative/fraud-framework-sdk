@@ -42,8 +42,8 @@ class BaseClient:
         request_id: str,
         has_json: bool,
         has_files: bool,
-        source_app: str = None,
-        source_program: str = None,
+        app_id: str = None,
+        program_id: str = None,
     ) -> dict:
         """
         Helper method to construct request headers
@@ -52,13 +52,13 @@ class BaseClient:
             request_id: Reference ID to track your verification request
             has_json: Request body has been passed in order to update header with the correct `Content-Type`
             has_files: Request file has been passed in order to update header with the correct `Content-Type`
-            source_app: Reference ID to track your verification request
-            source_program: Reference ID to track your verification request
+            app_id: Reference ID to track your verification request
+            program_id: Reference ID to track your verification request
         Returns:
             Request Headers
         """
         headers = {
-            "Authorization": token,
+            "x-api-key": token,
             "x-request-id": request_id,
             "User-Agent": get_user_agent(),
         }
@@ -66,10 +66,10 @@ class BaseClient:
             headers.update({"Content-Type": "application/json;charset=utf-8"})
         if has_files:
             headers.update({"Content-Type": "multipart/form-data"})
-        if source_program:
-            headers.update({"x-source-program": source_program})
-        if source_app:
-            headers.update({"x-source-app": source_app})
+        if program_id:
+            headers.update({"x-program-id": program_id})
+        if app_id:
+            headers.update({"x-app-id": app_id})
         if self.additional_headers:
             headers.update(self.additional_headers)
         return headers
@@ -94,8 +94,8 @@ class BaseClient:
         endpoint: str,
         request_id: str,
         *,
-        source_program: Optional[str] = None,
-        source_app: Optional[str] = None,
+        program_id: Optional[str] = None,
+        app_id: Optional[str] = None,
         http_method: str = "POST",
         data: Optional[dict] = None,
         file: Optional[io.BytesIO] = None,
@@ -106,8 +106,8 @@ class BaseClient:
             endpoint (str): The target Fraud Framework API method.
                 e.g. 'chat.postMessage'
             request_id: Reference ID to track your verification request
-            source_program: Reference ID to track your verification request
-            source_app: Reference ID to track your verification request
+            program_id: Reference ID to track your verification request
+            app_id: Reference ID to track your verification request
             http_method (str): HTTP method. e.g. 'POST'
             data: The body to attach to the request. If a dictionary is
                 provided, form-encoding will take place.
@@ -129,8 +129,8 @@ class BaseClient:
         request_headers = self._build_auth_headers(
             token=self.token,
             request_id=request_id,
-            source_program=source_program,
-            source_app=source_app,
+            program_id=program_id,
+            app_id=app_id,
             has_json=data is not None,
             has_files=file is not None,
         )
@@ -145,7 +145,7 @@ class BaseClient:
 
         if self._logger.level <= logging.DEBUG:
             redacted_headers = {
-                k: "(redacted)" if k.lower() == "authorization" else v for k, v in request_headers.items()
+                k: "(redacted)" if k.lower() == "x-api-key" else v for k, v in request_headers.items()
             }
             self._logger.debug(
                 f"Sending a request - url: {url}, "
@@ -201,8 +201,8 @@ class WebClient(BaseClient):
         self,
         data,
         request_id,
-        source_app=None,
-        source_program=None,
+        app_id=None,
+        program_id=None,
         callback_url=None,
         **kwargs,
     ) -> Response:
@@ -210,8 +210,8 @@ class WebClient(BaseClient):
         Args:
             data: The raw body of the incoming request - no headers, just the body.
             request_id: Reference ID to track your verification request
-            source_app: Reference ID to track your verification request
-            source_program: Reference ID to track your verification request
+            app_id: Reference ID to track your verification request
+            program_id: Reference ID to track your verification request
             callback_url: Callback URL that the Fraud Framework will ping back.
             kwargs:
         Returns:
@@ -222,8 +222,8 @@ class WebClient(BaseClient):
             "/risk/verify",
             data=data,
             request_id=request_id,
-            source_app=source_app,
-            source_program=source_program,
+            app_id=app_id,
+            program_id=program_id,
             params=kwargs,
         )
 
